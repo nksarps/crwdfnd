@@ -1,3 +1,8 @@
+from decouple import config as env
+
+from app.config.database import Base
+from app.models.user import User
+
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
@@ -9,6 +14,8 @@ from alembic import context
 # access to the values within the .ini file in use.
 config = context.config
 
+config.set_main_option('sqlalchemy.url', env('DB_URI'))
+
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 if config.config_file_name is not None:
@@ -18,7 +25,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = None
+target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
