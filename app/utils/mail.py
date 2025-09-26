@@ -19,3 +19,19 @@ def send_email_verification(email: EmailStr, full_name: str, link: str):
             },
         }
     )
+
+
+def password_reset_mail(email: EmailStr, full_name:str, link:str):
+    client.send_message(
+        message={
+            "to": {
+            "email": email,
+            },
+            "template": config('PASSWORD_RESET_TEMPLATE_ID'),
+            "data": {
+            "appName": "CrwdFnd",
+            "firstName": full_name,
+            "link": link,
+            },
+        }
+    )
